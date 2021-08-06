@@ -1,0 +1,8 @@
+[flake8]
+exclude =
+    .git,
+    __pycache__,
+    migrations,
+    reports
+ignore = E999
+max-line-length = 120
