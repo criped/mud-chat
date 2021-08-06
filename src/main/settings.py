@@ -21,12 +21,11 @@ DEBUG = True
 INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.sessions',
+    'contrib.mud_auth',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
 ]
@@ -102,3 +101,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+# Custom User Model
+AUTH_USER_MODEL = 'mud_auth.User'
