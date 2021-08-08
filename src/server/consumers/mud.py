@@ -1,10 +1,12 @@
 import json
 
+from channels.auth import get_user
 from channels.generic.websocket import AsyncWebsocketConsumer
 from django.utils.translation import ugettext_lazy as _
 
 from server.commands.command_registry import CommandRegistry, CommandNotFoundException
 from server.messages.base import Message
+from server.messages.group import GroupMessage
 
 
 class MUDConsumer(AsyncWebsocketConsumer):
@@ -59,3 +61,19 @@ class MUDConsumer(AsyncWebsocketConsumer):
                 Message(message).payload
             )
         )
+
+    async def chat_group_message(self, event):
+        """
+        Handles event sent in a group and sends it to the user
+        :param event: dictionary containing the entry text, which is the text to be sent.
+        """
+        message = event['text']
+        user = await get_user(self.scope)
+
+        if user.username != event['username']:
+            # Send text to WebSocket
+            await self.send(
+                text_data=json.dumps(
+                    GroupMessage(message, event['username'], event['location']).payload
+                )
+            )

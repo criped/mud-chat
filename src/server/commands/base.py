@@ -2,6 +2,7 @@ from abc import abstractmethod, ABC
 from typing import Tuple
 
 from server.messages.base import Message
+from server.messages.group import GroupMessage
 
 
 class CommandAbstract(ABC):
@@ -41,3 +42,9 @@ class CommandAbstract(ABC):
                 group,
                 Message(text).payload
             )
+
+    async def send_group_message(self, text, group_name, username):
+        await self.connection.channel_layer.group_send(
+            group_name,
+            GroupMessage(text, username, group_name, read_mode=False).payload
+        )

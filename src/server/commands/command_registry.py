@@ -10,7 +10,9 @@ from server.commands.parsers.parser_help import CommandParserHelp
 from server.commands.parsers.parser_login import CommandParserLogin
 from server.commands.parsers.parser_logout import CommandParserLogout
 from server.commands.parsers.parser_register import CommandParserRegister
+from server.commands.parsers.parser_say import CommandParserSay
 from server.commands.register import CommandRegister
+from server.commands.say import CommandSay
 
 
 class CommandNotFoundException(Exception):
@@ -29,6 +31,7 @@ class CommandRegistry:
         CommandRegister: CommandParserRegister,
         CommandLogout: CommandParserLogout,
         CommandHelp: CommandParserHelp,
+        CommandSay: CommandParserSay,
     }
 
     @classmethod

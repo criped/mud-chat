@@ -9,7 +9,7 @@ from server.commands.parsers.parser_login import CommandParserLogin
 
 
 class CommandLogin(CommandAbstract):
-    ALIASES = ('login', 'l')
+    ALIASES = ('login',)
     HELP = _('login <name> <password> - It lets you in the game :) You can also use `l` for shortcut')
     MESSAGE_ERROR_USER_NOT_FOUND = _('User not found')
     MESSAGE_ERROR_WRONG_PASSWORD = _('Incorrect password')
