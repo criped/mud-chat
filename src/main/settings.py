@@ -20,7 +20,9 @@ DEBUG = True
 
 INSTALLED_APPS = [
     'django.contrib.auth',
+    'django.contrib.sessions',
     'django.contrib.contenttypes',
+    'channels',
     'contrib.mud_auth',
 ]
 
@@ -28,6 +30,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
 ]
 
 TEMPLATES = [
@@ -104,3 +107,11 @@ USE_TZ = True
 
 # Custom User Model
 AUTH_USER_MODEL = 'mud_auth.User'
+
+ASGI_APPLICATION = "main.asgi.application"
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}

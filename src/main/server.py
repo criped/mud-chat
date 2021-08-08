@@ -36,9 +36,9 @@ class Session:
 
     async def send(self, message):
         """
-        Send message across the connection to the player.
+        Send text across the connection to the player.
         Args:
-            message (str): The message to send.
+            message (str): The text to send.
         """
         data = {"text": message, "token": self.token}
         await self.websocket.send(json.dumps(data))

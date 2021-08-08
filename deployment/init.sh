@@ -6,4 +6,4 @@ cat >/etc/motd <<EOL
 EOL
 cat /etc/motd
 
-PYTHONUNBUFFERED=1 python main/server.py
+PYTHONUNBUFFERED=1 python manage.py runserver
