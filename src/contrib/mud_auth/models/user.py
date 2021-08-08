@@ -37,8 +37,7 @@ class User(AbstractUser):
 
     @classmethod
     @database_sync_to_async
-    def update_location(cls, username, location_id: int):
-        user =  cls.objects.get(username=username)
+    def update_location(cls, user, location_id: int):
         user.location_id = location_id
         user.save(update_fields=['location_id'])
         return user

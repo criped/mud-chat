@@ -4,6 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from server.commands.base import CommandAbstract
 from server.commands.parsers.parser_login import CommandParserLogin
+from world.models import Room
 
 
 class CommandSay(CommandAbstract):
@@ -18,9 +19,8 @@ class CommandSay(CommandAbstract):
             Sends message entered by the user to its current location
         """
         user = await get_user(self.connection.scope)
-        location = "random_location"  # TODO: manage rooms
-
-        await self.send_group_message(self.parser.message, location, user.username)
+        current_room = await Room.get_room_by_id(user.location_id)
+        await self.send_group_message(self.parser.message, str(current_room.id), user.username)
 
     @staticmethod
     async def is_available(connection, *args, **kwargs) -> bool:

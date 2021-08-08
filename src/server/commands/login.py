@@ -6,6 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 from contrib.mud_auth.models import User
 from server.commands.base import CommandAbstract
 from server.commands.parsers.parser_login import CommandParserLogin
+from world.models import Room
 
 
 class CommandLogin(CommandAbstract):
@@ -50,15 +51,18 @@ class CommandLogin(CommandAbstract):
 
         # Place user in a game location
         if user.location_id:
+            room = await Room.get_room_by_id(user.location_id)
             await self.connection.channel_layer.group_add(
-                str(user.location_id),
+                str(room.id),
                 self.connection.channel_name
             )
         else:
+            room = await Room.get_default_room()
             await self.connection.channel_layer.group_add(
-                'random_location',
+                str(room.id),
                 self.connection.channel_name
             )
+            await User.update_location(user, room.id)
 
         # Send messages
         await self.send_chat_message(

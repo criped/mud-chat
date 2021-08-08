@@ -4,6 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from server.commands.base import CommandAbstract
 from server.commands.parsers.parser_login import CommandParserLogin
+from world.models import Room
 
 
 class CommandLogout(CommandAbstract):
@@ -25,8 +26,9 @@ class CommandLogout(CommandAbstract):
         user = await get_user(self.connection.scope)
         await logout(self.connection.scope)
 
+        current_room = await Room.get_room_by_id(user.location_id)
         await self.connection.channel_layer.group_discard(
-            "random_location",  # TODO: manage rooms
+            current_room.name,
             self.connection.channel_name
         )
 

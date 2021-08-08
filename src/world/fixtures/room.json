@@ -1,0 +1,42 @@
+[
+  {
+    "model": "world.room",
+    "pk": 1,
+    "fields": {
+      "name": "Just outside the k6 virtual offices",
+      "desc": "The k6 office building towers above you, disappearing into virtual clouds high above."
+    }
+  },
+  {
+    "model": "world.room",
+    "pk": 2,
+    "fields": {
+      "name": "The ridiculously large lobby",
+      "desc": "The k6 lobby stretches far in every direction. The exits are so far away that they almost dip below the horizon.\nThere's friendly sign here though, welcoming you."
+    }
+  },
+  {
+    "model": "world.room",
+    "pk": 3,
+    "fields": {
+      "name": "A lush terrarium",
+      "desc": "In the center of this office space is a huge glass terrarium. Inside are crocodiles, relaxing under an artiticial sun.\nOne side-hatch of the terrarium is left open and there is a wet trail leading westwards. Noone seem too bothered."
+    }
+  },
+  {
+    "model": "world.room",
+    "pk": 4,
+    "fields": {
+      "name": "The water cooler",
+      "desc": "This is clearly the heart of the k6 offices, people gather to chat and have Swedish 'fika' around a virtually huge water cooler."
+    }
+  },
+  {
+    "model": "world.room",
+    "pk": 5,
+    "fields": {
+      "name": "The backend machine room",
+      "desc": "This room is full of virtual machinery. Steam hisses from the Flask install in the corner, while an imposing wall of Django blinks along one wall.\nIn the center of the room, the backend devs are cheering two crocodiles running in a hamster wheel to keep the lights on."
+    }
+  }
+]

@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'channels',
     'contrib.mud_auth',
+    'world'
 ]
 
 MIDDLEWARE = [

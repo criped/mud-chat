@@ -1,0 +1,92 @@
+[
+  {
+    "model": "world.roomexit",
+    "pk": 1,
+    "fields": {
+      "name": "west",
+      "location": 1,
+      "destination": 2
+    }
+  },
+  {
+    "model": "world.roomexit",
+    "pk": 2,
+    "fields": {
+      "name": "north",
+      "location": 2,
+      "destination": 3
+    }
+  },
+  {
+    "model": "world.roomexit",
+    "pk": 3,
+    "fields": {
+      "name": "west",
+      "location": 2,
+      "destination": 4
+    }
+  },
+  {
+    "model": "world.roomexit",
+    "pk": 4,
+    "fields": {
+      "name": "east",
+      "location": 2,
+      "destination": 1
+    }
+  },
+  {
+    "model": "world.roomexit",
+    "pk": 5,
+    "fields": {
+      "name": "west",
+      "location": 3,
+      "destination": 5
+    }
+  },
+  {
+    "model": "world.roomexit",
+    "pk": 6,
+    "fields": {
+      "name": "south",
+      "location": 3,
+      "destination": 2
+    }
+  },
+  {
+    "model": "world.roomexit",
+    "pk": 7,
+    "fields": {
+      "name": "east",
+      "location": 4,
+      "destination": 2
+    }
+  },
+  {
+    "model": "world.roomexit",
+    "pk": 8,
+    "fields": {
+      "name": "north",
+      "location": 4,
+      "destination": 5
+    }
+  },
+  {
+    "model": "world.roomexit",
+    "pk": 9,
+    "fields": {
+      "name": "east",
+      "location": 5,
+      "destination": 3
+    }
+  },
+  {
+    "model": "world.roomexit",
+    "pk": 10,
+    "fields": {
+      "name": "south",
+      "location": 5,
+      "destination": 4
+    }
+  }
+]
