@@ -29,6 +29,6 @@ class CommandHelp(CommandAbstract):
 
         await self.send_chat_message(commands_help)
 
-    @staticmethod
-    async def is_available(connection, *args, **kwargs) -> bool:
+    @classmethod
+    async def is_available(cls, connection, *args, **kwargs) -> bool:
         return await sync_to_async(lambda: True)()

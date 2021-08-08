@@ -28,7 +28,7 @@ class CommandLogout(CommandAbstract):
 
         current_room = await Room.get_room_by_id(user.location_id)
         await self.connection.channel_layer.group_discard(
-            current_room.name,
+            str(current_room.id),
             self.connection.channel_name
         )
 

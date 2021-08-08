@@ -18,9 +18,9 @@ class CommandAbstract(ABC):
     async def run(self) -> None:
         ...
 
-    @staticmethod
+    @classmethod
     @abstractmethod
-    async def is_available(connection, *args, **kwargs) -> bool:
+    async def is_available(cls, connection, *args, **kwargs) -> bool:
         """
         Determines if the command is available for the user at that moment and location.
         :param connection: websocket connection

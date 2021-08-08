@@ -22,7 +22,7 @@ class CommandSay(CommandAbstract):
         current_room = await Room.get_room_by_id(user.location_id)
         await self.send_group_message(self.parser.message, str(current_room.id), user.username)
 
-    @staticmethod
-    async def is_available(connection, *args, **kwargs) -> bool:
+    @classmethod
+    async def is_available(cls, connection, *args, **kwargs) -> bool:
         user = await get_user(connection.scope)
         return type(user) != AnonymousUser

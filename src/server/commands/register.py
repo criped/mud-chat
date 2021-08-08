@@ -36,7 +36,7 @@ class CommandRegister(CommandAbstract):
                 self.MESSAGE_ERROR_USER_ALREADY_EXISTING.format(username=username)
             )
 
-    @staticmethod
-    async def is_available(connection, *args, **kwargs) -> bool:
+    @classmethod
+    async def is_available(cls, connection, *args, **kwargs) -> bool:
         user = await get_user(connection.scope)
         return type(user) == AnonymousUser

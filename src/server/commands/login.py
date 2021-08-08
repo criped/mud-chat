@@ -1,4 +1,5 @@
 from channels.auth import login, get_user
+from channels.db import database_sync_to_async
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth.models import AnonymousUser
 from django.utils.translation import ugettext_lazy as _
@@ -64,12 +65,15 @@ class CommandLogin(CommandAbstract):
             )
             await User.update_location(user, room.id)
 
+        self.connection.scope['session']['current_location_id'] = room.id
+        await database_sync_to_async(self.connection.scope['session'].save)()
+
         # Send messages
         await self.send_chat_message(
             self.MESSAGE_SUCCESS.format(username=username)
         )
 
-    @staticmethod
-    async def is_available(connection, *args, **kwargs) -> bool:
+    @classmethod
+    async def is_available(cls, connection, *args, **kwargs) -> bool:
         user = await get_user(connection.scope)
         return type(user) == AnonymousUser

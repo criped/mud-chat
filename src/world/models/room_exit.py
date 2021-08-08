@@ -1,3 +1,4 @@
+from channels.db import database_sync_to_async
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
@@ -25,6 +26,22 @@ class RoomExit(models.Model):
         related_name='exit_destinations',
         help_text=_('Room to exit to'),
     )
+
+    @classmethod
+    @database_sync_to_async
+    def check_exit(cls, room_id: int, direction: str):
+        return cls.objects.filter(
+            location=room_id,
+            name=direction
+        ).exists()
+
+    @classmethod
+    @database_sync_to_async
+    def get_exit_destination(cls, room_id: int, direction: str):
+        return cls.objects.get(
+            location=room_id,
+            name=direction
+        ).destination
 
     class Meta:
         verbose_name = _('Room')
