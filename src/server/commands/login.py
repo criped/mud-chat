@@ -1,5 +1,6 @@
-from channels.auth import login
+from channels.auth import login, get_user
 from django.contrib.auth.hashers import check_password
+from django.contrib.auth.models import AnonymousUser
 from django.utils.translation import ugettext_lazy as _
 
 from contrib.mud_auth.models import User
@@ -9,6 +10,7 @@ from server.commands.parsers.parser_login import CommandParserLogin
 
 class CommandLogin(CommandAbstract):
     ALIASES = ('login', 'l')
+    HELP = _('login <name> <password> - It lets you in the game :) You can also use `l` for shortcut')
     MESSAGE_ERROR_USER_NOT_FOUND = _('User not found')
     MESSAGE_ERROR_WRONG_PASSWORD = _('Incorrect password')
     MESSAGE_SUCCESS = _('Logged in successfully as {username}!')
@@ -16,7 +18,7 @@ class CommandLogin(CommandAbstract):
 
     NOTIFICATION_SUCCESS = _('User {username} logged in successfully!')
 
-    def __init__(self, connection, parser: CommandParserLogin) -> None:
+    def __init__(self, connection, parser: CommandParserLogin, *args, **kwargs) -> None:
         super().__init__(connection, parser)
 
     async def run(self) -> None:
@@ -62,3 +64,8 @@ class CommandLogin(CommandAbstract):
         await self.send_chat_message(
             self.MESSAGE_SUCCESS.format(username=username)
         )
+
+    @staticmethod
+    async def is_available(connection, *args, **kwargs) -> bool:
+        user = await get_user(connection.scope)
+        return type(user) == AnonymousUser

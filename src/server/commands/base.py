@@ -6,6 +6,7 @@ from server.messages.base import Message
 
 class CommandAbstract(ABC):
     ALIASES: Tuple = tuple()
+    HELP: str = ''
 
     @abstractmethod
     def __init__(self, connection, parser, *args, **kwargs) -> None:
@@ -14,6 +15,18 @@ class CommandAbstract(ABC):
 
     @abstractmethod
     async def run(self) -> None:
+        ...
+
+    @staticmethod
+    @abstractmethod
+    async def is_available(connection, *args, **kwargs) -> bool:
+        """
+        Determines if the command is available for the user at that moment and location.
+        :param connection: websocket connection
+        :param args: additional context in positinonal arguments
+        :param kwargs: additional context in positinonal arguments
+        :return: True if available, False if not.
+        """
         ...
 
     async def send_chat_message(self, text):

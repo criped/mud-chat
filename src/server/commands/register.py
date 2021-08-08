@@ -1,18 +1,19 @@
-from channels.auth import login
+from channels.auth import login, get_user
+from django.contrib.auth.models import AnonymousUser
 from django.utils.translation import ugettext_lazy as _
 
 from contrib.mud_auth.models import User
 from server.commands.base import CommandAbstract
-from server.commands.parsers.parser_login import CommandParserLogin
 from server.commands.parsers.parser_register import CommandParserRegister
 
 
 class CommandRegister(CommandAbstract):
     ALIASES = ('register', 'r')
+    HELP = 'register <name> <password> - It lets you sign up! You can also use `r` for shortcut'
     MESSAGE_ERROR_USER_ALREADY_EXISTING = _('User {username} already existing')
     MESSAGE_SUCCESS = _('User {username} registered successfully! Please, log in to start.')
 
-    def __init__(self, connection, parser: CommandParserRegister) -> None:
+    def __init__(self, connection, parser: CommandParserRegister, *args, **kwargs) -> None:
         super().__init__(connection, parser)
 
     async def run(self) -> None:
@@ -34,3 +35,8 @@ class CommandRegister(CommandAbstract):
             await self.send_chat_message(
                 self.MESSAGE_ERROR_USER_ALREADY_EXISTING.format(username=username)
             )
+
+    @staticmethod
+    async def is_available(connection, *args, **kwargs) -> bool:
+        user = await get_user(connection.scope)
+        return type(user) == AnonymousUser

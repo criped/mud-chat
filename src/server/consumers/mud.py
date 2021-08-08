@@ -32,9 +32,9 @@ class MUDConsumer(AsyncWebsocketConsumer):
         """
         text_data_json = json.loads(text_data)
         message = text_data_json['text']
-
+        available_command_classes = await CommandRegistry.get_available_commands(self)
         try:
-            command_class, command_parser = CommandRegistry.get_command_from_message(message)
+            command_class, command_parser = CommandRegistry.get_command_from_message(message, available_command_classes)
         except CommandNotFoundException as exc:
             await self.chat_message(
                 Message(str(exc)).payload
