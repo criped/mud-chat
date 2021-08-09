@@ -116,3 +116,16 @@ CHANNEL_LAYERS = {
         "BACKEND": "channels.layers.InMemoryChannelLayer"
     }
 }
+
+MUD_COMMANDS_BASE = {
+    'server.commands.login.CommandLogin': 'server.commands.parsers.parser_login.CommandParserLogin',
+    'server.commands.register.CommandRegister': 'server.commands.parsers.parser_register.CommandParserRegister',
+    'server.commands.logout.CommandLogout': 'server.commands.parsers.parser_logout.CommandParserLogout',
+    'server.commands.help.CommandHelp': 'server.commands.parsers.parser_help.CommandParserHelp',
+    'server.commands.say.CommandSay': 'server.commands.parsers.parser_say.CommandParserSay',
+    'server.commands.move.north.CommandNorth': 'server.commands.parsers.parser_move.CommandParserMove',
+    'server.commands.move.south.CommandSouth': 'server.commands.parsers.parser_move.CommandParserMove',
+    'server.commands.move.west.CommandWest': 'server.commands.parsers.parser_move.CommandParserMove',
+    'server.commands.move.east.CommandEast': 'server.commands.parsers.parser_move.CommandParserMove',
+    'server.commands.look.look.CommandLook': 'server.commands.parsers.parser_look.CommandParserLook',
+}

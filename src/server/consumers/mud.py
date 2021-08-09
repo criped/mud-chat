@@ -54,7 +54,6 @@ class MUDConsumer(AsyncWebsocketConsumer):
         """
         message = event['text']
 
-        # Send text to WebSocket
         await self.send(
             text_data=json.dumps(
                 Message(message).payload
@@ -70,7 +69,6 @@ class MUDConsumer(AsyncWebsocketConsumer):
         user = await get_user(self.scope)
 
         if user.username != event['username']:
-            # Send text to WebSocket
             await self.send(
                 text_data=json.dumps(
                     GroupMessage(message, event['username'], event['location']).payload

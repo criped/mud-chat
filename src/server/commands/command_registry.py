@@ -1,25 +1,11 @@
-from typing import Tuple, List
+from typing import Tuple, List, Dict
 
+from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
+from pycodestyle import lru_cache
 
-from server.commands.help import CommandHelp
-from server.commands.login import CommandLogin
-from server.commands.logout import CommandLogout
-from server.commands.look.look import CommandLook
-from server.commands.move.east import CommandEast
-from server.commands.move.north import CommandNorth
-from server.commands.move.south import CommandSouth
-from server.commands.move.west import CommandWest
 from server.commands.parsers.parser_base import CommandParserBase
-from server.commands.parsers.parser_help import CommandParserHelp
-from server.commands.parsers.parser_login import CommandParserLogin
-from server.commands.parsers.parser_logout import CommandParserLogout
-from server.commands.parsers.parser_look import CommandParserLook
-from server.commands.parsers.parser_move import CommandParserMove
-from server.commands.parsers.parser_register import CommandParserRegister
-from server.commands.parsers.parser_say import CommandParserSay
-from server.commands.register import CommandRegister
-from server.commands.say import CommandSay
+from server.utils import import_class
 
 
 class CommandNotFoundException(Exception):
@@ -33,18 +19,20 @@ class CommandNotFoundException(Exception):
 
 
 class CommandRegistry:
-    COMMAND_REGISTRY = {
-        CommandLogin: CommandParserLogin,
-        CommandRegister: CommandParserRegister,
-        CommandLogout: CommandParserLogout,
-        CommandHelp: CommandParserHelp,
-        CommandSay: CommandParserSay,
-        CommandNorth: CommandParserMove,
-        CommandSouth: CommandParserMove,
-        CommandWest: CommandParserMove,
-        CommandEast: CommandParserMove,
-        CommandLook: CommandParserLook,
-    }
+    @classmethod
+    @lru_cache(None)
+    def registered_commands(cls) -> Dict:
+        """
+        Imports base commands and the ones registered for extension
+        :return: dictionary containing command class and command parsers
+        """
+        commands_config = settings.MUD_COMMANDS_BASE
+        if hasattr(settings, 'MUD_COMMANDS'):
+            commands_config.update(settings.MUD_COMMANDS)
+        return {
+            import_class(command_class): import_class(command_parser)
+            for command_class, command_parser in commands_config.items()
+        }
 
     @classmethod
     def get_command_from_message(cls, input_message: str, available_command_classes: List) -> Tuple:
@@ -60,7 +48,7 @@ class CommandRegistry:
         command_config = None
         for command_class in available_command_classes:
             if parser.command_name in command_class.ALIASES:
-                command_config = command_class, cls.COMMAND_REGISTRY[command_class]
+                command_config = command_class, cls.registered_commands()[command_class]
 
         if not command_config:
             raise CommandNotFoundException(parser.command_name)
@@ -69,4 +57,6 @@ class CommandRegistry:
 
     @classmethod
     async def get_available_commands(cls, connection) -> List:
-        return [command_class for command_class in cls.COMMAND_REGISTRY if await command_class.is_available(connection)]
+        return [
+            command_class for command_class in cls.registered_commands() if await command_class.is_available(connection)
+        ]
