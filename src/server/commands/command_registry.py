@@ -5,6 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 from server.commands.help import CommandHelp
 from server.commands.login import CommandLogin
 from server.commands.logout import CommandLogout
+from server.commands.look.look import CommandLook
 from server.commands.move.east import CommandEast
 from server.commands.move.north import CommandNorth
 from server.commands.move.south import CommandSouth
@@ -13,6 +14,7 @@ from server.commands.parsers.parser_base import CommandParserBase
 from server.commands.parsers.parser_help import CommandParserHelp
 from server.commands.parsers.parser_login import CommandParserLogin
 from server.commands.parsers.parser_logout import CommandParserLogout
+from server.commands.parsers.parser_look import CommandParserLook
 from server.commands.parsers.parser_move import CommandParserMove
 from server.commands.parsers.parser_register import CommandParserRegister
 from server.commands.parsers.parser_say import CommandParserSay
@@ -41,6 +43,7 @@ class CommandRegistry:
         CommandSouth: CommandParserMove,
         CommandWest: CommandParserMove,
         CommandEast: CommandParserMove,
+        CommandLook: CommandParserLook,
     }
 
     @classmethod

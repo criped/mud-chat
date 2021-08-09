@@ -66,7 +66,9 @@ class CommandLogin(CommandAbstract):
             await User.update_location(user, room.id)
 
         self.connection.scope['session']['current_location_id'] = room.id
+        self.connection.scope['session']['username'] = username
         await database_sync_to_async(self.connection.scope['session'].save)()
+        await User.set_is_online(user)
 
         # Send messages
         await self.send_chat_message(

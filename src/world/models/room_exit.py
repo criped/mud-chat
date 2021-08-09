@@ -1,3 +1,5 @@
+from typing import List
+
 from channels.db import database_sync_to_async
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -42,6 +44,18 @@ class RoomExit(models.Model):
             location=room_id,
             name=direction
         ).destination
+
+    @classmethod
+    @database_sync_to_async
+    def get_exit_names(cls, room_id: int) -> List[str]:
+        return list(cls.objects.filter(
+            location=room_id,
+        ).order_by(
+            'name'
+        ).values_list(
+            'name',
+            flat=True
+        ))
 
     class Meta:
         verbose_name = _('Room')

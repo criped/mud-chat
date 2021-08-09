@@ -2,6 +2,7 @@ from channels.auth import logout, get_user
 from django.contrib.auth.models import AnonymousUser
 from django.utils.translation import ugettext_lazy as _
 
+from contrib.mud_auth.models import User
 from server.commands.base import CommandAbstract
 from server.commands.parsers.parser_login import CommandParserLogin
 from world.models import Room
@@ -34,6 +35,7 @@ class CommandLogout(CommandAbstract):
 
         await self.send_chat_message(self.MESSAGE_SUCCESS)
         await self.send_broadcast_message(self.MESSAGE_SUCCESS_BROADCAST.format(username=user.username))
+        await User.set_is_online(user, False)
 
     @staticmethod
     async def is_available(connection, *args, **kwargs) -> bool:

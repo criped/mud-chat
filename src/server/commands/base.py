@@ -37,7 +37,6 @@ class CommandAbstract(ABC):
 
     async def send_broadcast_message(self, text):
         for group in self.connection.channel_layer.groups.keys():
-            print(f"sending to group {group}")
             await self.connection.channel_layer.group_send(
                 group,
                 Message(text).payload

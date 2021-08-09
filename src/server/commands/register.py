@@ -26,8 +26,7 @@ class CommandRegister(CommandAbstract):
         username = self.parser.username
         user_exists = await User.check_exists(username)
         if not user_exists:
-            user = await User.register_user(username, self.parser.password)
-            await login(self.connection.scope, user)
+            await User.register_user(username, self.parser.password)
             await self.send_chat_message(
                 self.MESSAGE_SUCCESS.format(username=username)
             )
