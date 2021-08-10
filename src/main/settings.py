@@ -41,12 +41,14 @@ MIDDLEWARE = [
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-# [production adjustment] The database should a production-suitable RDBMS like PostgreSQL and their credentials
-# should be passed by env vars.
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3')
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.environ.get('DATABASENAME'),
+        'USER': os.environ.get('DATABASEUSER'),
+        'PASSWORD': os.environ.get('DATABASEPASSWORD'),
+        'HOST': os.environ.get('DATABASEHOST'),
+        'PORT': os.environ.get('DATABASEPORT'),
     }
 }
 

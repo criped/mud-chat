@@ -2,6 +2,18 @@
 version: '3'
 
 services:
+  mud-database:
+    container_name: mud-postgres
+    image: postgres:13
+    environment:
+      POSTGRES_USER: 'demo_user'
+      POSTGRES_PASSWORD: 'demo_pwd'
+      POSTGRES_DB: 'demo_db'
+    volumes:
+      - ./data/postgresql:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+
   mud-server:
     build:
       context: .
@@ -11,3 +23,11 @@ services:
       - ./src:/src:rw
     ports:
       - '9878:9878'
+    depends_on:
+      - mud-database
+    environment:
+      DATABASEHOST: 'mud-database'
+      DATABASENAME: 'demo_db'
+      DATABASEUSER: 'demo_user'
+      DATABASEPASSWORD: 'demo_pwd'
+      DATABASEPORT: '5432'

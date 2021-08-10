@@ -6,6 +6,8 @@ cat >/etc/motd <<EOL
 EOL
 cat /etc/motd
 
+# wait until the database is built
+wait-for-it.sh $DATABASEHOST:$DATABASEPORT -t 15 -- sleep 10
 # Apply database schema changes
 PYTHONUNBUFFERED=1 python manage.py migrate
 # Load initial data
