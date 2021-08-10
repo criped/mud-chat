@@ -1,4 +1,4 @@
-from channels.auth import login, get_user
+from channels.auth import get_user
 from django.contrib.auth.models import AnonymousUser
 from django.utils.translation import ugettext_lazy as _
 

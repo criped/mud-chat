@@ -2,6 +2,7 @@ import json
 
 from channels.auth import get_user
 from channels.generic.websocket import AsyncWebsocketConsumer
+from django.contrib.auth.models import AnonymousUser
 from django.utils.translation import ugettext_lazy as _
 
 from contrib.mud_auth.models import User
@@ -24,7 +25,9 @@ class MUDConsumer(AsyncWebsocketConsumer):
 
     async def disconnect(self, code):
         # Set user as offline when disconnected without logging out
-        await User.set_is_online(await get_user(self.scope), False)
+        user = await get_user(self.scope)
+        if type(user) != AnonymousUser:
+            await User.set_is_online(user, False)
 
     async def receive(self, text_data=None, bytes_data=None):
         """

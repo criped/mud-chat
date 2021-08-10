@@ -1,3 +1,5 @@
+from typing import Tuple
+
 from django.utils.translation import ugettext_lazy as _
 
 from server.commands.base import CommandAbstract
@@ -15,7 +17,7 @@ class CommandLook(CommandAbstract):
     )
 
     # Elements must be laid out in the exact order they are meant to be shown
-    ELEMENT_CLASSES = (LookElementRoom, LookElementUsers, LookElementRoomExits)
+    ELEMENT_CLASSES: Tuple = (LookElementRoom, LookElementUsers, LookElementRoomExits)
 
     def __init__(self, connection, parser: CommandParserLogin, *args, **kwargs) -> None:
         super().__init__(connection, parser)

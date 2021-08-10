@@ -8,5 +8,3 @@ class Message:
             'type': self.TYPE,
             'text': str(text),
         }
-
-
