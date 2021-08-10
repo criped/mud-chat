@@ -1,4 +1,0 @@
--r base.txt
-
-flake8==3.9.2
-mypy==0.910

@@ -6,4 +6,7 @@ cat >/etc/motd <<EOL
 EOL
 cat /etc/motd
 
-PYTHONUNBUFFERED=1 python manage.py runserver
+PYTHONUNBUFFERED=1 python manage.py migrate
+# Runserver is only for local environments. For production we should deploy on some production ASGI server
+# like daphne or uvicorn (https://docs.djangoproject.com/en/3.2/howto/deployment/asgi/daphne/)
+PYTHONUNBUFFERED=1 python manage.py runserver 9878
