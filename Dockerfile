@@ -16,14 +16,16 @@ RUN mkdir /src
 COPY /requirements.txt /
 RUN pip3 install -r /requirements.txt
 
+COPY deployment/init-server.sh /usr/local/bin/
+RUN chmod u+x /usr/local/bin/init-server.sh
 
-COPY deployment/init.sh /usr/local/bin/
-RUN chmod u+x /usr/local/bin/init.sh
+COPY deployment/init-client.sh /usr/local/bin/
+RUN chmod u+x /usr/local/bin/init-client.sh
 
 # Copy source code
 ADD /src/ /src/
 
 WORKDIR /src
 
-EXPOSE 80
-ENTRYPOINT ["init.sh"]
+EXPOSE 9878
+ENTRYPOINT ["init-server.sh"]

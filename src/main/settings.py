@@ -10,11 +10,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Set base directory as parent's folder (src)
 BASE_DIR = os.path.dirname(BASE_DIR)
 
-# SECURITY WARNING: keep the secret key used in production secret!
+ALLOWED_HOSTS = ['']
+
+# [production adjustment] The secret key should be passed by env vars and be kept in secret.
+# The reason is that Django uses to for generating hashes.
+# User passwords and sessions would be compromised if the secret key was disclosed
+# https://docs.djangoproject.com/en/3.2/ref/settings/#secret-key
 SECRET_KEY = 'h7@sk*^1n#o%wre1ck&49kio89mfgzwt@68in8-(j5)+mpouv_'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 # Application definition
 
@@ -34,44 +38,16 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
 ]
 
-TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
-        },
-    },
-]
-
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-
-if DEBUG is True:
-    DATABASE_CONF_DEFAULT = {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-else:
-    DATABASE_CONF_DEFAULT = {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': os.environ.get('DATABASENAME', ''),
-        'USER': os.environ.get('DATABASEUSER', ''),
-        'PASSWORD': os.environ.get('DATABASEPASSWORD', ''),
-        'HOST': os.environ.get('DATABASEHOST', ''),
-        'PORT': os.environ.get('DATABASEPORT', ''),
-    }
-
-
+# [production adjustment] The database should a production-suitable RDBMS like PostgreSQL and their credentials
+# should be passed by env vars.
 DATABASES = {
-    'default': DATABASE_CONF_DEFAULT
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3')
+    }
 }
 
 # Password validation
@@ -111,12 +87,15 @@ AUTH_USER_MODEL = 'mud_auth.User'
 
 ASGI_APPLICATION = "main.asgi.application"
 
+# [production adjustment] Django channels recommends and supports Redis as backend for channel layers for production use
+# (https://channels.readthedocs.io/en/stable/topics/channel_layers.html#redis-channel-layer)
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels.layers.InMemoryChannelLayer"
     }
 }
 
+# Basic commands of this MUD game
 MUD_COMMANDS_BASE = {
     'server.commands.login.CommandLogin': 'server.commands.parsers.parser_login.CommandParserLogin',
     'server.commands.register.CommandRegister': 'server.commands.parsers.parser_register.CommandParserRegister',
