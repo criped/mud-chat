@@ -57,6 +57,11 @@ class CommandRegistry:
 
     @classmethod
     async def get_available_commands(cls, connection) -> List:
+        """
+        Discover available commands available for the given connection.
+        Each command must implement its `is_available()` method.
+        :param connection: websocket connection to the end user
+        """
         return [
             command_class for command_class in cls.registered_commands() if await command_class.is_available(connection)
         ]

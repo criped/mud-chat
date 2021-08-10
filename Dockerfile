@@ -22,14 +22,11 @@ RUN chmod u+x /usr/local/bin/init-server.sh
 COPY deployment/init-client.sh /usr/local/bin/
 RUN chmod u+x /usr/local/bin/init-client.sh
 
+COPY deployment/init-test.sh /usr/local/bin/
+RUN chmod u+x /usr/local/bin/init-test.sh
+
 COPY deployment/wait-for-it.sh /usr/local/bin/
 RUN chmod u+x /usr/local/bin/wait-for-it.sh
-
-COPY mypy.ini /src
-RUN chmod u+r /src/mypy.ini
-
-COPY .flake8 /src
-RUN chmod u+r /src/.flake8
 
 # Copy source code
 ADD /src/ /src/

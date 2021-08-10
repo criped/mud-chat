@@ -52,7 +52,8 @@ class MUDConsumer(AsyncWebsocketConsumer):
 
     async def chat_message(self, event):
         """
-        Sends text to the user-specific websocket connection
+        Sends text to the user-specific websocket connection,
+        which are the events identified by the type 'chat.chat_message'
         :param event: dictionary containing the entry text, which is the text to be sent.
         """
         message = event['text']
@@ -65,7 +66,7 @@ class MUDConsumer(AsyncWebsocketConsumer):
 
     async def chat_group_message(self, event):
         """
-        Handles event sent in a group and sends it to the user
+        Handles event sent in a group and sends it to the user (identified by the type 'chat.group_message')
         :param event: dictionary containing the entry text, which is the text to be sent.
         """
         message = event['text']
