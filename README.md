@@ -18,32 +18,34 @@ the emerging Python standard for asynchronous web servers and applications.
 ## Contributing
 
 
-To learn more about contributing, please read our contribution guide on `CONTRIBUTION.md`.
+To learn more about contributing, please read our contribution guide on `CONTRIBUTING.md`.
 
 ## Get Started 
 
 In order to run the game server, the easiest way is by using Docker Compose. Simply: 
 
 ```
-# Start docker compose 
+# Start MUD server on docker compose 
 docker-compose up
+```
+
+Once we have the server up and running, you can enter the game by running a client as follows:
+
+```
+docker-compose exec mud-server init-client.sh
 ```
 
 Alternatively, you can run a test server within your own Python environment as follows:
 
-
 ```
 # Install dependencies 
-pip install -r src/requirements/base.txt
+pip install -r requirements/base.txt
+
 # Run Server, make sure you run a Python 3.7+ interpreter 
 python src/manage.py runserver 9878
-```
 
-Once we have the server up and running, you can run enter the game by running a client as follows:
-
-```
-# Run client, make sure you run a Python 3.7+ interpreter
-python src/client.py
+# Run client
+python client.py
 ```
 
 ## Code Walk-through
@@ -55,17 +57,17 @@ The server handles asynchronous websocket connections by implementing a
 It is placed on `src/main/consumers/mud.py`
 
 ### Users 
-`src/main/contrib/mud_auth` contains Django models to store and handle user-related features.
+`src/contrib/mud_auth` contains Django models to store and handle user-related features.
 
 ### World 
-`src/main/world` contains Django models to store and handle world-related features like rooms and their exits. New rooms
+`src/world` contains Django models to store and handle world-related features like rooms and their exits. New rooms
 can be added directly from database by inserting a new room and its exits.
 
 ### Commands
 Commands are implemented in `src/server/commands` in an extensible way. These are the steps if you want to implement 
-your own command:
+your own command in your project:
 
-1. Make sure you have installed this app into your django apps.
+1. Make sure you have installed this app into your django apps. 
 2. Create your own command, inheriting from `src.server.commands.base.CommandBase`. You will have to implement 
 all the abstract methods like the constructor, `run()` and `is_available()`. The last one is relevant so that the `help` 
 command can show info about it.

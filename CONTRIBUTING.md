@@ -30,16 +30,16 @@ by means of git tags.
 ## Contribution Process
 
 In order to contribute to the code base, we follow the next process :
-1. The main branch is `master`, every developer should pull the current status of the branch before starting to develop any new feature.
+1. The main branch is `main`, every developer should pull the current status of the branch before starting to develop any new feature.
 `git pull`
 1. Create a new branch with the following pattern "feature/[name_of_the_feature]"
 `git checkout -b feature/example_feature`
 3. Develop the new feature on the the new branch. It includes testing and documentation.
 `git commit -a -m "Bla, Bla, Bla";  git push`
-4. Open a Pull Request to merge the feature branch into `master`. Currently, a pull request has to be reviewed at least by one person.
+4. Open a Pull Request to merge the feature branch into `main`. Currently, a pull request has to be reviewed at least by one person.
 5. Finally, delete the feature branch.
-6. Move back to `master` branch.
-`git checkout master`
+6. Move back to `main` branch.
+`git checkout main`
 7. Pull the latest changes.
 `git pull`
 
@@ -62,7 +62,7 @@ Look at [GitHub issues](https://github.com/criped/mud-server/issues) for feature
 
 ### Improve Documentation
 
-Django Channels MUD could always use better documentation, whether as part of the official Khiva docs, or even description of the 
+Django Channels MUD could always use better documentation, whether as part of the official docs, or even description of the 
 methods in the different namespaces.
 
 ### Submit Feedback
@@ -82,6 +82,12 @@ We stick to [Django's code of conduct](https://www.djangoproject.com/conduct/)
 Start docker containers.
 
 ```
-# Start docker compose 
+# Start MUD server on docker compose 
 docker-compose up
+```
+
+To run all tests, open a new terminal and run the following:
+```
+# Run linters and tests
+docker-compose exec mud-server init-test.sh
 ```
