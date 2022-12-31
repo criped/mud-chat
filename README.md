@@ -48,6 +48,9 @@ python src/manage.py runserver 9878
 python client.py
 ```
 
+From the MUD client just started, you can see the available commands by typing `help`. 
+Create your user account via the `register` command and start chatting with online users across available rooms! 
+
 ## Code Walk-through
 
 ### Server
@@ -77,6 +80,6 @@ created command class will receive it in order to manage the input arguments.
 ```
 # your settings.py
 MUD_COMMANDS = {
-    'path.to.your.commands.module.CommandClass': ''path.to.your.command.parsers.module.CommandParserClass'   
+    'path.to.your.commands.module.CommandClass': 'path.to.your.command.parsers.module.CommandParserClass'   
 }
 ```
